@@ -1,4 +1,8 @@
-﻿.sidebar {
+﻿* {
+    font-family: Calibri;
+}
+
+.sidebar {
     bottom: 0;
     height: 100%;
     overflow: auto;
