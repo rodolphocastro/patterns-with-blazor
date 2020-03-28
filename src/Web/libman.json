@@ -1,5 +1,14 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "turretcss@5.2.1",
+      "destination": "wwwroot/css/turret/",
+      "files": [
+        "dist/turretcss.min.css"
+      ]
+    }
+  ]
 }
