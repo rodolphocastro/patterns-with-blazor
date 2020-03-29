@@ -1,4 +1,8 @@
-﻿<form @onsubmit="OnSubmit">
+﻿@using Data
+@using Models
+@inject IPeopleService PeopleService
+
+<form @onsubmit="OnSubmit">
   <fieldset>
     <h4>Person</h4>
     <p class="field">
@@ -45,20 +49,25 @@
       </p>
     </fieldset>
     <p class="field">
-      <button type="submit" class="button">Submit</button>
-      <button type="reset" class="button">Reset</button>
+      <div class="button-group button-group-block">
+        <button type="submit" class="button">Submit</button>
+        <button type="reset" class="button">Reset</button>
+      </div>
     </p>
   </fieldset>
 </form>
 
 @code {
+  private const string _homeAddressType = "Home";
+  private const string _businessAddressType = "Business";
+
   public string Name { get; set; }
 
   public DateTimeOffset? DateOfBirth { get; set; }
 
-  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { "Home", "Business" };
+  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { _homeAddressType, _businessAddressType };
 
-  public string SelectedAddressType { get; set; } = "Home";
+  public string SelectedAddressType { get; set; } = _homeAddressType;
 
   public string AddressStreet { get; set; }
 
@@ -72,7 +81,35 @@
 
   public void OnSubmit()
   {
-    // TODO: Criar a pessoa e adicionar na collection
-    Console.WriteLine("Button Submited!");
+    var p = new Person
+    {
+      Name = Name,
+      DateOfBirth = DateOfBirth
+    };
+
+    if (SelectedAddressType == _homeAddressType)
+    {
+      p.HomeAddress = new Address
+      {
+        CountryName = AddressCountryName,
+        StateName = AddressStateName,
+        CityName = AddressCityName,
+        Street = AddressStreet,
+        Number = AddressNumber
+      };
+    }
+    else
+    {
+      p.BusinessAddress = new Address
+      {
+        CountryName = AddressCountryName,
+        StateName = AddressStateName,
+        CityName = AddressCityName,
+        Street = AddressStreet,
+        Number = AddressNumber
+      };
+    }
+
+    PeopleService.AddPerson(p);
   }
 }
