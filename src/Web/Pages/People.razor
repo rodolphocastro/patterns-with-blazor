@@ -19,9 +19,16 @@
 
   @if (DisplayForm)
   {
+    <h3>New Person</h3>
     <PersonBuilderForm OnPersonBuilt="AddPerson">
     </PersonBuilderForm>
   }
+
+  <hr />
+
+  <PeopleTable People="PeopleService.People">
+
+  </PeopleTable>
 
 </section>
 

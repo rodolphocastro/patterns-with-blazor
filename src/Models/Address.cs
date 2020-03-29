@@ -11,5 +11,7 @@
         public string StateName { get; set; }
 
         public string CountryName { get; set; }
+
+        public override string ToString() => $"{Street}, {Number}, {CityName} - {StateName}, {CountryName}";
     }
 }
