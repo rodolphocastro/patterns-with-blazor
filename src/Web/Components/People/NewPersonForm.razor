@@ -79,6 +79,13 @@
 
     public void OnSubmit()
     {
+      var result = BuildWithFluent();
+
+      PeopleService.AddPerson(result);
+    }
+
+    private Person BuildWithFluent()
+    {
       var pBuilder = Builders.PersonBuilders.Fluent;
       var aBuilder = Builders.AddressBuilders.Fluent;
 
@@ -95,6 +102,6 @@
         .WithAddress(SelectedAddressType, aBuilder.Build())
         .Build();
 
-      PeopleService.AddPerson(result);
+      return result;
     }
 }
