@@ -2,6 +2,16 @@
 {
     public class FluentAddressBuilder : AddressBuilder
     {
+        public FluentAddressBuilder(Address a) : base(a)
+        {
+
+        }
+
+        public FluentAddressBuilder()
+        {
+
+        }
+
         public FluentAddressBuilder WithCountry(string country)
         {
             _address.CountryName = country;

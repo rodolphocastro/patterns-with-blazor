@@ -4,6 +4,15 @@ namespace Models.Builders
 {
     public class FluentPersonBuilder : PersonBuilder
     {
+        public FluentPersonBuilder()
+        {
+
+        }
+
+        public FluentPersonBuilder(Person p) : base(p)
+        {
+
+        }
         public FluentPersonBuilder Named(string name)
         {
             _person.Name = name;
