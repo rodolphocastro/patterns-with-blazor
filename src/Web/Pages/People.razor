@@ -2,19 +2,29 @@
 
 @using Data
 @using Models
+@using Web.Components.People
 
 @inject IPeopleService PeopleService
 
-<h3>People</h3>
-<h4>There are @Count people registered</h4>
+<section>
 
-<button @onclick="ToggleForm">New Person</button>
+  <h2>People</h2>
+  <h3>There are @Count people registered</h3>
 
-@if (DisplayForm)
-{
-  <NewPersonForm>
-  </NewPersonForm>
-}
+  <p>Pick a creational strategy:</p>
+
+  <div class="button-group button-group-block">
+    <button class="button" @onclick="ToggleForm">Builder</button>
+  </div>
+
+  @if (DisplayForm)
+  {
+    <PersonBuilderForm OnPersonBuilt="AddPerson">
+    </PersonBuilderForm>
+  }
+
+</section>
+
 
 @code {
   public bool DisplayForm { get; set; } = false;
@@ -22,5 +32,7 @@
   public int Count => PeopleService.AmountOfPeople;
 
   public void ToggleForm() => DisplayForm = !DisplayForm;
+
+  public void AddPerson(Person p) => PeopleService.AddPerson(p);
 
 }
