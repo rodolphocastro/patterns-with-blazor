@@ -1,8 +1,22 @@
 ﻿@using Data
 @using Models
+@using Models.Builders
 @inject IPeopleService PeopleService
 
 <form @onsubmit="OnSubmit">
+  <fieldset>
+    <h4>Selected Builder</h4>
+    <p class="field">
+      <label class="select" for="builder-type">
+        <select id="builder-type" @bind="SelectedBuilderType">
+          @foreach (var type in BuilderTypes)
+          {
+            <option>@type</option>
+          }
+        </select>
+      </label>
+    </p>
+  </fieldset>
   <fieldset>
     <h4>Person</h4>
     <p class="field">
@@ -58,58 +72,124 @@
 </form>
 
 @code {
-  private const string _homeAddressType = "Home";
-  private const string _businessAddressType = "Business";
+    public string Name { get; set; }
 
-  public string Name { get; set; }
+    public DateTimeOffset? DateOfBirth { get; set; }
 
-  public DateTimeOffset? DateOfBirth { get; set; }
+    public IEnumerable<string> AddressTypes => new List<string> { AddressType.HomeAddress, AddressType.BusinessAddress };
 
-  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { _homeAddressType, _businessAddressType };
+    public string SelectedAddressType { get; set; } = AddressType.HomeAddress;
 
-  public string SelectedAddressType { get; set; } = _homeAddressType;
+    public string AddressStreet { get; set; }
 
-  public string AddressStreet { get; set; }
+    public int? AddressNumber { get; set; }
 
-  public int? AddressNumber { get; set; }
+    public string AddressCityName { get; set; }
 
-  public string AddressCityName { get; set; }
+    public string AddressStateName { get; set; }
 
-  public string AddressStateName { get; set; }
+    public string AddressCountryName { get; set; }
 
-  public string AddressCountryName { get; set; }
+    public IEnumerable<string> BuilderTypes => Builders.Types;
+    public string SelectedBuilderType { get; set; } = Builders.FluentType;
 
-  public void OnSubmit()
-  {
-    var p = new Person
+    public void OnSubmit()
     {
-      Name = Name,
-      DateOfBirth = DateOfBirth
-    };
-
-    if (SelectedAddressType == _homeAddressType)
-    {
-      p.HomeAddress = new Address
+      Person result;
+      switch (SelectedBuilderType)
       {
-        CountryName = AddressCountryName,
-        StateName = AddressStateName,
-        CityName = AddressCityName,
-        Street = AddressStreet,
-        Number = AddressNumber
-      };
-    }
-    else
-    {
-      p.BusinessAddress = new Address
-      {
-        CountryName = AddressCountryName,
-        StateName = AddressStateName,
-        CityName = AddressCityName,
-        Street = AddressStreet,
-        Number = AddressNumber
-      };
+        case Builders.FluentType:
+          result = BuildWithFluent();
+          break;
+        case Builders.FunctionalType:
+          result = BuildWithFunctional();
+          break;
+        case Builders.FacetedType:
+          result = BuildWithFaceted();
+          break;
+        default:
+          throw new ArgumentException();
+      }
+
+      PeopleService.AddPerson(result);
     }
 
-    PeopleService.AddPerson(p);
-  }
+    private Person BuildWithFluent()
+    {
+      var pBuilder = Builders.PersonBuilders.Fluent;
+      var aBuilder = Builders.AddressBuilders.Fluent;
+
+      aBuilder
+        .WithCountry(AddressCountryName)
+        .WithState(AddressStateName)
+        .WithCity(AddressCityName)
+        .WithStreet(AddressStreet)
+        .WithNumber(AddressNumber);
+
+      var result = pBuilder
+        .Named(Name)
+        .BornIn(DateOfBirth)
+        .WithAddress(SelectedAddressType, aBuilder.Build())
+        .Build();
+
+      return result;
+    }
+
+    private Person BuildWithFunctional()
+    {
+      var pBuilder = Builders.PersonBuilders.Functional;
+      var aBuilder = Builders.AddressBuilders.Functional;
+
+      _ = pBuilder
+        .Named(Name)
+        .BornIn(DateOfBirth);
+
+      _ = aBuilder
+        .AtCountry(AddressCountryName)
+        .AtState(AddressStateName)
+        .AtCity(AddressCityName)
+        .AtStreet(AddressStreet)
+        .AtNumber(AddressNumber);
+
+      if (SelectedAddressType.Equals(AddressType.HomeAddress))
+      {
+        _ = pBuilder.LivesAt(aBuilder.Build());
+      }
+      else
+      {
+        _ = pBuilder.WorksAt(aBuilder.Build());
+      }
+
+      return pBuilder.Build();
+    }
+
+    private Person BuildWithFaceted()
+    {
+      var builder = Builders.PersonBuilders.Faceted;
+
+      _ = builder.Person
+        .Named(Name)
+        .BornIn(DateOfBirth);
+
+      if (SelectedAddressType.Equals(AddressType.HomeAddress))
+      {
+        _ = builder.Lives
+          .WithCountry(AddressCountryName)
+          .WithState(AddressStateName)
+          .WithCity(AddressCityName)
+          .WithStreet(AddressStreet)
+          .WithNumber(AddressNumber);
+      }
+      else
+      {
+        _ = builder.Works
+          .WithCountry(AddressCountryName)
+          .WithState(AddressStateName)
+          .WithCity(AddressCityName)
+          .WithStreet(AddressStreet)
+          .WithNumber(AddressNumber);
+      }
+
+      return builder.Build();
+    }
 }
