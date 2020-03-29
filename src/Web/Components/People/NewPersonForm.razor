@@ -1,0 +1,115 @@
+﻿@using Data
+@using Models
+@inject IPeopleService PeopleService
+
+<form @onsubmit="OnSubmit">
+  <fieldset>
+    <h4>Person</h4>
+    <p class="field">
+      <label for="person-name">Name</label>
+      <input id="person-name" type="text" placeholder="John Smith" @bind-value="Name" />
+    </p>
+    <p class="field">
+      <label for="person-dob">Date of Birth</label>
+      <input id="person-dob" type="date" @bind-value="DateOfBirth" />
+    </p>
+  </fieldset>
+  <fieldset>
+    <h4>Address</h4>
+    <p class="field">
+      <label class="select" for="address-type">
+        <select id="address-type" @bind="SelectedAddressType">
+          @foreach (var type in AddressTypes)
+          {
+            <option>@type</option>
+          }
+        </select>
+      </label>
+    </p>
+    <fieldset>
+      <p class="field">
+        <label for="address-country">Country</label>
+        <input id="address-country" type="text" @bind-value="AddressCountryName" />
+      </p>
+      <p class="field">
+        <label for="address-state">State</label>
+        <input id="address-state" type="text" @bind-value="AddressStateName" placeholder="New York" />
+      </p>
+      <p class="field">
+        <label for="address-city">City</label>
+        <input id="address-city" type="text" @bind-value="AddressCityName" placeholder="New York" />
+      </p>
+      <p class="field">
+        <label for="address-street">Street</label>
+        <input id="address-street" type="text" @bind-value="AddressStreet" placeholder="7th Avenue" />
+      </p>
+      <p class="field">
+        <label for="address-number">Number</label>
+        <input id="address-number" type="number" @bind-value="AddressNumber" placeholder="0" />
+      </p>
+    </fieldset>
+    <p class="field">
+      <div class="button-group button-group-block">
+        <button type="submit" class="button">Submit</button>
+        <button type="reset" class="button">Reset</button>
+      </div>
+    </p>
+  </fieldset>
+</form>
+
+@code {
+  private const string _homeAddressType = "Home";
+  private const string _businessAddressType = "Business";
+
+  public string Name { get; set; }
+
+  public DateTimeOffset? DateOfBirth { get; set; }
+
+  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { _homeAddressType, _businessAddressType };
+
+  public string SelectedAddressType { get; set; } = _homeAddressType;
+
+  public string AddressStreet { get; set; }
+
+  public int? AddressNumber { get; set; }
+
+  public string AddressCityName { get; set; }
+
+  public string AddressStateName { get; set; }
+
+  public string AddressCountryName { get; set; }
+
+  public void OnSubmit()
+  {
+    var p = new Person
+    {
+      Name = Name,
+      DateOfBirth = DateOfBirth
+    };
+
+    if (SelectedAddressType == _homeAddressType)
+    {
+      p.HomeAddress = new Address
+      {
+        CountryName = AddressCountryName,
+        StateName = AddressStateName,
+        CityName = AddressCityName,
+        Street = AddressStreet,
+        Number = AddressNumber
+      };
+    }
+    else
+    {
+      p.BusinessAddress = new Address
+      {
+        CountryName = AddressCountryName,
+        StateName = AddressStateName,
+        CityName = AddressCityName,
+        Street = AddressStreet,
+        Number = AddressNumber
+      };
+    }
+
+    PeopleService.AddPerson(p);
+  }
+}

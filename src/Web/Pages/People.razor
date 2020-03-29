@@ -1,0 +1,26 @@
+﻿@page "/people"
+
+@using Data
+@using Models
+
+@inject IPeopleService PeopleService
+
+<h3>People</h3>
+<h4>There are @Count people registered</h4>
+
+<button @onclick="ToggleForm">New Person</button>
+
+@if (DisplayForm)
+{
+  <NewPersonForm>
+  </NewPersonForm>
+}
+
+@code {
+  public bool DisplayForm { get; set; } = false;
+
+  public int Count => PeopleService.AmountOfPeople;
+
+  public void ToggleForm() => DisplayForm = !DisplayForm;
+
+}
