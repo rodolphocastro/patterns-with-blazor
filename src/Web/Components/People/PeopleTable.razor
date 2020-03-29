@@ -1,0 +1,28 @@
+﻿@using Models
+
+<table class="table-responsive">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Born In</th>
+      <th>Home Address</th>
+      <th>Business Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var person in People)
+    {
+    <tr>
+      <td>@person.Name</td>
+      <td>@person.DateOfBirth</td>
+      <td>@person.HomeAddress</td>
+      <td>@person.BusinessAddress</td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public IEnumerable<Person> People { get; set; }
+}
