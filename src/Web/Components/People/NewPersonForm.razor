@@ -104,6 +104,9 @@
         case Builders.FunctionalType:
           result = BuildWithFunctional();
           break;
+        case Builders.FacetedType:
+          result = BuildWithFaceted();
+          break;
         default:
           throw new ArgumentException();
       }
@@ -158,5 +161,35 @@
       }
 
       return pBuilder.Build();
+    }
+
+    private Person BuildWithFaceted()
+    {
+      var builder = Builders.PersonBuilders.Faceted;
+
+      _ = builder.Person
+        .Named(Name)
+        .BornIn(DateOfBirth);
+
+      if (SelectedAddressType.Equals(AddressType.HomeAddress))
+      {
+        _ = builder.Lives
+          .WithCountry(AddressCountryName)
+          .WithState(AddressStateName)
+          .WithCity(AddressCityName)
+          .WithStreet(AddressStreet)
+          .WithNumber(AddressNumber);
+      }
+      else
+      {
+        _ = builder.Works
+          .WithCountry(AddressCountryName)
+          .WithState(AddressStateName)
+          .WithCity(AddressCityName)
+          .WithStreet(AddressStreet)
+          .WithNumber(AddressNumber);
+      }
+
+      return builder.Build();
     }
 }
