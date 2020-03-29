@@ -1,5 +1,6 @@
 ﻿@using Data
 @using Models
+@using Models.Builders
 @inject IPeopleService PeopleService
 
 <form @onsubmit="OnSubmit">
@@ -78,35 +79,23 @@
 
   public void OnSubmit()
   {
-    var p = new Person
+    var pBuilder = Builders.Fluent;
+
+    var address = new Address
     {
-      Name = Name,
-      DateOfBirth = DateOfBirth
+      CountryName = AddressCountryName,
+      StateName = AddressStateName,
+      CityName = AddressCityName,
+      Street = AddressStreet,
+      Number = AddressNumber
     };
 
-    if (SelectedAddressType == AddressType.HomeAddress)
-    {
-      p.HomeAddress = new Address
-      {
-        CountryName = AddressCountryName,
-        StateName = AddressStateName,
-        CityName = AddressCityName,
-        Street = AddressStreet,
-        Number = AddressNumber
-      };
-    }
-    else
-    {
-      p.BusinessAddress = new Address
-      {
-        CountryName = AddressCountryName,
-        StateName = AddressStateName,
-        CityName = AddressCityName,
-        Street = AddressStreet,
-        Number = AddressNumber
-      };
-    }
+    var result = pBuilder
+      .WithName(Name)
+      .WithDateOfBirth(DateOfBirth)
+      .WithAddress(SelectedAddressType, address)
+      .Build();
 
-    PeopleService.AddPerson(p);
+    PeopleService.AddPerson(result);
   }
 }
