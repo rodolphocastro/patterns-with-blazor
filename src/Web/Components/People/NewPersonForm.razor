@@ -59,43 +59,42 @@
 </form>
 
 @code {
-  public string Name { get; set; }
+    public string Name { get; set; }
 
-  public DateTimeOffset? DateOfBirth { get; set; }
+    public DateTimeOffset? DateOfBirth { get; set; }
 
-  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { AddressType.HomeAddress, AddressType.BusinessAddress };
+    public IEnumerable<string> AddressTypes { get; set; } = new List<string> { AddressType.HomeAddress, AddressType.BusinessAddress };
 
-  public string SelectedAddressType { get; set; } = AddressType.HomeAddress;
+    public string SelectedAddressType { get; set; } = AddressType.HomeAddress;
 
-  public string AddressStreet { get; set; }
+    public string AddressStreet { get; set; }
 
-  public int? AddressNumber { get; set; }
+    public int? AddressNumber { get; set; }
 
-  public string AddressCityName { get; set; }
+    public string AddressCityName { get; set; }
 
-  public string AddressStateName { get; set; }
+    public string AddressStateName { get; set; }
 
-  public string AddressCountryName { get; set; }
+    public string AddressCountryName { get; set; }
 
-  public void OnSubmit()
-  {
-    var pBuilder = Builders.Fluent;
-
-    var address = new Address
+    public void OnSubmit()
     {
-      CountryName = AddressCountryName,
-      StateName = AddressStateName,
-      CityName = AddressCityName,
-      Street = AddressStreet,
-      Number = AddressNumber
-    };
+      var pBuilder = Builders.PersonBuilders.Fluent;
+      var aBuilder = Builders.AddressBuilders.Fluent;
 
-    var result = pBuilder
-      .WithName(Name)
-      .WithDateOfBirth(DateOfBirth)
-      .WithAddress(SelectedAddressType, address)
-      .Build();
+      aBuilder
+        .WithCountry(AddressCountryName)
+        .WithState(AddressStateName)
+        .WithCity(AddressCityName)
+        .WithStreet(AddressStreet)
+        .WithNumber(AddressNumber);
 
-    PeopleService.AddPerson(result);
-  }
+      var result = pBuilder
+        .WithName(Name)
+        .WithDateOfBirth(DateOfBirth)
+        .WithAddress(SelectedAddressType, aBuilder.Build())
+        .Build();
+
+      PeopleService.AddPerson(result);
+    }
 }
