@@ -2,14 +2,14 @@
 
 namespace Models
 {
-    public class AddressType
+    public class AddressType : IEquatable<AddressType>
     {
         private const string _homeAddress = "Home";
         private const string _businessAddress = "Business";
 
         private AddressType(string value) => Value = value;
 
-        public string Value { get; private set; }
+        public string Value { get; }
 
         public static AddressType HomeAddress => new AddressType(_homeAddress);
 
@@ -29,5 +29,8 @@ namespace Models
 
             throw new InvalidCastException($"The string {s} cannot be cast to AddressType");
         }
+
+        public override bool Equals(object obj) => Equals(obj as AddressType);
+        public bool Equals(AddressType other) => other != null && Value == other.Value;
     }
 }
