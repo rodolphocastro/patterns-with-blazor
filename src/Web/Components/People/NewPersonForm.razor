@@ -1,9 +1,7 @@
-﻿@using Data
-@using Models
+﻿@using Models
 @using Models.Builders
-@inject IPeopleService PeopleService
 
-<form @onsubmit="OnSubmit">
+<form @onsubmit="BuildPerson">
   <fieldset>
     <h4>Selected Builder</h4>
     <p class="field">
@@ -93,7 +91,10 @@
     public IEnumerable<string> BuilderTypes => Builders.Types;
     public string SelectedBuilderType { get; set; } = Builders.FluentType;
 
-    public void OnSubmit()
+    [Parameter]
+    public EventCallback<Person> OnPersonBuilt { get; set; }
+
+    public async Task BuildPerson()
     {
       Person result;
       switch (SelectedBuilderType)
@@ -111,7 +112,7 @@
           throw new ArgumentException();
       }
 
-      PeopleService.AddPerson(result);
+      await OnPersonBuilt.InvokeAsync(result);
     }
 
     private Person BuildWithFluent()
