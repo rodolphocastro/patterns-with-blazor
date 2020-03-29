@@ -90,8 +90,8 @@
         .WithNumber(AddressNumber);
 
       var result = pBuilder
-        .WithName(Name)
-        .WithDateOfBirth(DateOfBirth)
+        .Named(Name)
+        .BornIn(DateOfBirth)
         .WithAddress(SelectedAddressType, aBuilder.Build())
         .Build();
 

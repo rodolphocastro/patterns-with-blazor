@@ -4,13 +4,13 @@ namespace Models.Builders
 {
     public class FluentPersonBuilder : PersonBuilder
     {
-        public FluentPersonBuilder WithName(string name)
+        public FluentPersonBuilder Named(string name)
         {
             _person.Name = name;
             return this;
         }
 
-        public FluentPersonBuilder WithDateOfBirth(DateTimeOffset? dob)
+        public FluentPersonBuilder BornIn(DateTimeOffset? dob)
         {
             _person.DateOfBirth = dob;
             return this;
