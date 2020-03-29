@@ -4,84 +4,16 @@
 
 <h3>People</h3>
 
-<form @onsubmit="OnSubmit">
-  <fieldset>
-    <h4>Person</h4>
-    <p class="field">
-      <label for="person-name">Name</label>
-      <input id="person-name" type="text" placeholder="John Smith" @bind-value="Name" />
-    </p>
-    <p class="field">
-      <label for="person-dob">Date of Birth</label>
-      <input id="person-dob" type="date" @bind-value="DateOfBirth" />
-    </p>
-  </fieldset>
-  <fieldset>
-    <h4>Address</h4>
-    <p class="field">
-      <label class="select" for="address-type">
-        <select id="address-type" @bind="SelectedAddressType">
-          @foreach (var type in AddressTypes)
-          {
-            <option>@type</option>
-          }
-        </select>
-      </label>
-    </p>
-    <fieldset>
-      <p class="field">
-        <label for="address-country">Country</label>
-        <input id="address-country" type="text" @bind-value="AddressCountryName" />
-      </p>
-      <p class="field">
-        <label for="address-state">State</label>
-        <input id="address-state" type="text" @bind-value="AddressStateName" placeholder="New York" />
-      </p>
-      <p class="field">
-        <label for="address-city">City</label>
-        <input id="address-city" type="text" @bind-value="AddressCityName" placeholder="New York" />
-      </p>
-      <p class="field">
-        <label for="address-street">Street</label>
-        <input id="address-street" type="text" @bind-value="AddressStreet" placeholder="7th Avenue" />
-      </p>
-      <p class="field">
-        <label for="address-number">Number</label>
-        <input id="address-number" type="number" @bind-value="AddressNumber" placeholder="0" />
-      </p>
-    </fieldset>
-    <p class="field">
-      <button type="submit" class="button">Submit</button>
-      <button type="reset" class="button">Reset</button>
-    </p>
-  </fieldset>
-</form>
+<button @onclick="ToggleForm">New Person</button>
+
+@if (DisplayForm)
+{
+  <NewPersonForm>
+  </NewPersonForm>
+}
 
 @code {
-  private readonly ICollection<Person> _people = new HashSet<Person>();
+    public bool DisplayForm { get; set; } = false;
 
-  public string Name { get; set; }
-
-  public DateTimeOffset? DateOfBirth { get; set; }
-
-  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { "Home", "Business" };
-
-  public string SelectedAddressType { get; set; } = "Home";
-
-  public string AddressStreet { get; set; }
-
-  public int? AddressNumber { get; set; }
-
-  public string AddressCityName { get; set; }
-
-  public string AddressStateName { get; set; }
-
-  public string AddressCountryName { get; set; }
-
-  public void OnSubmit()
-  {
-    // TODO: Criar a pessoa e adicionar na collection
-    Console.WriteLine("Button Submited!");
-  }
-
+    public void ToggleForm() => DisplayForm = !DisplayForm;
 }
