@@ -108,6 +108,9 @@
         case Builders.FacetedType:
           result = BuildWithFaceted();
           break;
+        case Builders.Inheritable:
+          result = BuildWithInheritable();
+          break;
         default:
           throw new ArgumentException();
       }
@@ -192,5 +195,32 @@
       }
 
       return builder.Build();
+    }
+
+    private Person BuildWithInheritable()
+    {
+      var pBuilder = Builders.PersonBuilders.InheritableFluent;
+      var aBuilder = Builders.AddressBuilders.Fluent;
+
+      _ = pBuilder
+        .Named(Name)
+        .BornIn(DateOfBirth);
+      _ = aBuilder
+        .WithCountry(AddressCountryName)
+        .WithState(AddressStateName)
+        .WithCity(AddressCityName)
+        .WithStreet(AddressStreet)
+        .WithNumber(AddressNumber);
+      
+      if (SelectedAddressType.Equals(AddressType.HomeAddress))
+      {
+        _ = pBuilder.LivesAt(aBuilder.Build());
+      }
+      else
+      {
+        _ = pBuilder.WorksAt(aBuilder.Build());
+      }
+
+      return pBuilder.Build();
     }
 }
