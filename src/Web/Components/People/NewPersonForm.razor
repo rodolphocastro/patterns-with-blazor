@@ -58,16 +58,13 @@
 </form>
 
 @code {
-  private const string _homeAddressType = "Home";
-  private const string _businessAddressType = "Business";
-
   public string Name { get; set; }
 
   public DateTimeOffset? DateOfBirth { get; set; }
 
-  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { _homeAddressType, _businessAddressType };
+  public IEnumerable<string> AddressTypes { get; set; } = new List<string> { AddressType.HomeAddress, AddressType.BusinessAddress };
 
-  public string SelectedAddressType { get; set; } = _homeAddressType;
+  public string SelectedAddressType { get; set; } = AddressType.HomeAddress;
 
   public string AddressStreet { get; set; }
 
@@ -87,7 +84,7 @@
       DateOfBirth = DateOfBirth
     };
 
-    if (SelectedAddressType == _homeAddressType)
+    if (SelectedAddressType == AddressType.HomeAddress)
     {
       p.HomeAddress = new Address
       {
