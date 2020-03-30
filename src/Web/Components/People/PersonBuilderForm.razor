@@ -4,6 +4,8 @@
 @inject FluentPersonBuilder _fluentPersonBuilder
 @inject FunctionalPersonBuilder _functionalPersonBuilder
 @inject InheritablePersonBuilder _inheritablePersonBuilder
+@inject FluentAddressBuilder _fluentAddressBuilder
+@inject FunctionalAddressBuilder _functionalAddressBuilder
 
 <form @onsubmit="BuildPerson">
   <fieldset>
@@ -126,7 +128,8 @@
     {
       var pBuilder = _fluentPersonBuilder;
       pBuilder.Clear();
-      var aBuilder = Builders.AddressBuilders.Fluent;
+      var aBuilder = _fluentAddressBuilder;
+      aBuilder.Clear();
 
       aBuilder
         .WithCountry(AddressCountryName)
@@ -148,7 +151,8 @@
     {
       var pBuilder = _functionalPersonBuilder;
       pBuilder.Clear();
-      var aBuilder = Builders.AddressBuilders.Functional;
+      var aBuilder = _functionalAddressBuilder;
+      aBuilder.Clear();
 
       _ = pBuilder
         .Named(Name)
@@ -176,6 +180,7 @@
     private Person BuildWithFaceted()
     {
       var builder = Builders.PersonBuilders.Faceted;
+      builder.Clear();
 
       _ = builder.Person
         .Named(Name)
@@ -206,7 +211,9 @@
     private Person BuildWithInheritable()
     {
       var pBuilder = _inheritablePersonBuilder;
-      var aBuilder = Builders.AddressBuilders.Fluent;
+      pBuilder.Clear();
+      var aBuilder = _fluentAddressBuilder;
+      aBuilder.Clear();
 
       _ = pBuilder
         .Named(Name)
