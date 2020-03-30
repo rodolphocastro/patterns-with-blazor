@@ -20,5 +20,7 @@ namespace Models.Builders
         }
 
         public Person Build() => _person;
+
+        public void Clear() => _person = null;
     }
 }

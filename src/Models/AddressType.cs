@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -32,5 +33,6 @@ namespace Models
 
         public override bool Equals(object obj) => Equals(obj as AddressType);
         public bool Equals(AddressType other) => other != null && Value == other.Value;
+        public override int GetHashCode() => -1937169414 + EqualityComparer<string>.Default.GetHashCode(Value);
     }
 }
