@@ -20,5 +20,7 @@ namespace Models.Builders
         }
 
         public Address Build() => _address;
+
+        public void Clear() => _address = null;
     }
 }
