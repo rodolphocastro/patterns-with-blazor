@@ -1,17 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Microsoft.Extensions.Logging;
+
 namespace Models.Builders
 {
     public class FunctionalPersonBuilder : PersonBuilder
     {
         private readonly List<Action<Person>> _actions = new List<Action<Person>>();
+        private readonly ILogger<FunctionalPersonBuilder> _logger;
 
         public IList<Action<Person>> Actions => _actions;
 
+        public FunctionalPersonBuilder(ILogger<FunctionalPersonBuilder> logger = null) : base(logger)
+        {
+            _logger = logger;
+        }
+
         public new Person Build()
         {
-            _actions.ForEach(a => a(_person));
+            _actions.ForEach(a =>
+            {
+                _logger?.LogDebug("Applying action {@Action} to {@Person}", a, _person);
+                a(_person);
+            });
             return base.Build();
         }
     }

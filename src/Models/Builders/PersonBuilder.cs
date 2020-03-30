@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 
 namespace Models.Builders
 {
@@ -7,11 +8,12 @@ namespace Models.Builders
     /// </summary>
     public abstract class PersonBuilder
     {
+        private readonly ILogger<PersonBuilder> _logger;
         protected Person _person = new Person();
 
-        protected PersonBuilder()
+        protected PersonBuilder(ILogger<PersonBuilder> logger = null)
         {
-
+            _logger = logger;
         }
 
         protected PersonBuilder(Person p)
@@ -19,8 +21,16 @@ namespace Models.Builders
             _person = p ?? throw new ArgumentNullException(nameof(p));
         }
 
-        public Person Build() => _person;
+        public Person Build()
+        {
+            _logger?.LogDebug("Building person {@Person}", _person);
+            return _person;
+        }
 
-        public void Clear() => _person = null;
+        public void Clear()
+        {
+            _logger?.LogDebug("Cleaning person {@Person}", _person);
+            _person = new Person();
+        }
     }
 }
