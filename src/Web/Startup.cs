@@ -29,6 +29,7 @@ namespace Web
             services.AddServerSideBlazor();
             services.AddScoped<FluentPersonBuilder>();
             services.AddScoped<FunctionalPersonBuilder>();
+            services.AddScoped<InheritablePersonBuilder>();
             services.AddSingleton<IPeopleService, PeopleService>();
         }
 

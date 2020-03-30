@@ -3,6 +3,7 @@
 
 @inject FluentPersonBuilder _fluentPersonBuilder
 @inject FunctionalPersonBuilder _functionalPersonBuilder
+@inject InheritablePersonBuilder _inheritablePersonBuilder
 
 <form @onsubmit="BuildPerson">
   <fieldset>
@@ -204,7 +205,7 @@
 
     private Person BuildWithInheritable()
     {
-      var pBuilder = Builders.PersonBuilders.InheritableFluent;
+      var pBuilder = _inheritablePersonBuilder;
       var aBuilder = Builders.AddressBuilders.Fluent;
 
       _ = pBuilder
