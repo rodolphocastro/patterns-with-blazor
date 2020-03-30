@@ -30,6 +30,8 @@ namespace Web
             services.AddScoped<FluentPersonBuilder>();
             services.AddScoped<FunctionalPersonBuilder>();
             services.AddScoped<InheritablePersonBuilder>();
+            services.AddScoped<FluentAddressBuilder>();
+            services.AddScoped<FunctionalAddressBuilder>();
             services.AddSingleton<IPeopleService, PeopleService>();
         }
 
