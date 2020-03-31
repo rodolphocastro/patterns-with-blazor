@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "src\Models\Models
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{F1426A01-F2D0-48EA-A672-A3734054BEAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Extensions.Microsoft.DependencyInjection", "src\Models.Extensions.Microsoft.DependencyInjection\Models.Extensions.Microsoft.DependencyInjection.csproj", "{AC85E072-2B65-479A-AB16-018D7DC1DBA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F1426A01-F2D0-48EA-A672-A3734054BEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1426A01-F2D0-48EA-A672-A3734054BEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1426A01-F2D0-48EA-A672-A3734054BEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC85E072-2B65-479A-AB16-018D7DC1DBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC85E072-2B65-479A-AB16-018D7DC1DBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC85E072-2B65-479A-AB16-018D7DC1DBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC85E072-2B65-479A-AB16-018D7DC1DBA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
