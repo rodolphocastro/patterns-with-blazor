@@ -1,6 +1,13 @@
 ﻿@using Models
 @using Models.Builders
 
+@inject FluentPersonBuilder _fluentPersonBuilder
+@inject FunctionalPersonBuilder _functionalPersonBuilder
+@inject InheritablePersonBuilder _inheritablePersonBuilder
+@inject FluentAddressBuilder _fluentAddressBuilder
+@inject FunctionalAddressBuilder _functionalAddressBuilder
+@inject FacetedPersonBuilder _facetedPersonBuilder
+
 <form @onsubmit="BuildPerson">
   <fieldset>
     <h4>Strategy</h4>
@@ -120,8 +127,10 @@
 
     private Person BuildWithFluent()
     {
-      var pBuilder = Builders.PersonBuilders.Fluent;
-      var aBuilder = Builders.AddressBuilders.Fluent;
+      var pBuilder = _fluentPersonBuilder;
+      pBuilder.Clear();
+      var aBuilder = _fluentAddressBuilder;
+      aBuilder.Clear();
 
       aBuilder
         .WithCountry(AddressCountryName)
@@ -141,8 +150,10 @@
 
     private Person BuildWithFunctional()
     {
-      var pBuilder = Builders.PersonBuilders.Functional;
-      var aBuilder = Builders.AddressBuilders.Functional;
+      var pBuilder = _functionalPersonBuilder;
+      pBuilder.Clear();
+      var aBuilder = _functionalAddressBuilder;
+      aBuilder.Clear();
 
       _ = pBuilder
         .Named(Name)
@@ -169,7 +180,8 @@
 
     private Person BuildWithFaceted()
     {
-      var builder = Builders.PersonBuilders.Faceted;
+      var builder = _facetedPersonBuilder;
+      builder.Clear();
 
       _ = builder.Person
         .Named(Name)
@@ -199,8 +211,10 @@
 
     private Person BuildWithInheritable()
     {
-      var pBuilder = Builders.PersonBuilders.InheritableFluent;
-      var aBuilder = Builders.AddressBuilders.Fluent;
+      var pBuilder = _inheritablePersonBuilder;
+      pBuilder.Clear();
+      var aBuilder = _fluentAddressBuilder;
+      aBuilder.Clear();
 
       _ = pBuilder
         .Named(Name)
