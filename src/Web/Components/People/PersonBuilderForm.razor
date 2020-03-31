@@ -6,6 +6,7 @@
 @inject InheritablePersonBuilder _inheritablePersonBuilder
 @inject FluentAddressBuilder _fluentAddressBuilder
 @inject FunctionalAddressBuilder _functionalAddressBuilder
+@inject FacetedPersonBuilder _facetedPersonBuilder
 
 <form @onsubmit="BuildPerson">
   <fieldset>
@@ -179,7 +180,7 @@
 
     private Person BuildWithFaceted()
     {
-      var builder = Builders.PersonBuilders.Faceted;
+      var builder = _facetedPersonBuilder;
       builder.Clear();
 
       _ = builder.Person

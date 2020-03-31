@@ -27,11 +27,12 @@ namespace Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<FluentPersonBuilder>();
-            services.AddScoped<FunctionalPersonBuilder>();
-            services.AddScoped<InheritablePersonBuilder>();
-            services.AddScoped<FluentAddressBuilder>();
-            services.AddScoped<FunctionalAddressBuilder>();
+            services.AddTransient<FluentPersonBuilder>();
+            services.AddTransient<FunctionalPersonBuilder>();
+            services.AddTransient<InheritablePersonBuilder>();
+            services.AddTransient<FluentAddressBuilder>();
+            services.AddTransient<FunctionalAddressBuilder>();
+            services.AddTransient<FacetedPersonBuilder>();
             services.AddSingleton<IPeopleService, PeopleService>();
         }
 
