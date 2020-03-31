@@ -1,0 +1,110 @@
+﻿@using Models
+@using Models.Factories
+
+<form @onsubmit="SubmitVehicle">
+  <fieldset>
+    <h4>Strategy</h4>
+    <p class="field">
+      <label class="select" for="factory-type">
+        <select id="factory-type" @bind="SelectedFactoryType">
+          @foreach (var type in Factories.Types)
+          {
+            <option>@type</option>
+          }
+        </select>
+      </label>
+    </p>
+  </fieldset>
+  <fieldset>
+    <h4>Vehicle</h4>
+    <p class="field">
+      <label class="select" for="vehicle-type">
+        <select id="vehicle-type" @bind="SelectedVehicleType">
+          @foreach (var type in VehicleTypes.TypesList)
+          {
+            <option>@type</option>
+          }
+        </select>
+      </label>
+    </p>
+    <p class="field">
+      <label class="select" for="vehicle-make">
+        <select id="vehicle-make" @bind="SelectedVehicleMake">
+          @foreach (var make in VehicleMakes.Makes)
+          {
+            <option>@make</option>
+          }
+        </select>
+      </label>
+    </p>
+    <p class="field">
+      <label for="vehicle-model">Model</label>
+      <input id="vehicle-model" type="text" @bind-value="Model" />
+    </p>
+    <p class="field">
+      <label for="vehicle-doors">Doors</label>
+      <input id="vehicle-doors" type="number" placeholder="4" @bind-value="Doors" />
+    </p>
+  </fieldset>
+  <fieldset>
+    <p class="field">
+      <div class="button-group button-group-block">
+        <button type="submit" class="button">Submit</button>
+        <button type="reset" class="button">Reset</button>
+      </div>
+    </p>
+  </fieldset>
+</form>
+
+@code {
+  public string SelectedFactoryType { get; set; } = Factories.MethodFactory;
+  public string SelectedVehicleType { get; set; } = VehicleTypes.Car;
+  public string SelectedVehicleMake { get; set; } = string.Empty;
+  public string Model { get; set; }
+  public int? Doors { get; set; } = null;
+
+  [Parameter]
+  public EventCallback<Vehicle> OnVehicleSubmitted { get; set; }
+
+  public void SubmitVehicle()
+  {
+    OnVehicleSubmitted.InvokeAsync(CreateByType(SelectedVehicleMake, Model, Doors));
+  }
+
+  private Vehicle CreateByType(string make, string model, int? doors)
+  {
+    switch (SelectedVehicleType)
+    {
+      case VehicleTypes.Car:
+        return CreateCar(make, model, (int)doors);
+      case VehicleTypes.Motorcycle:
+        return CreateMotorcycle(make, model);
+      case VehicleTypes.Spaceship:
+        return CreateSpaceship(make, model, doors);
+      case VehicleTypes.Unicycle:
+        return CreateUnicycle(make, model);
+      default:
+        throw new InvalidOperationException("Selected type is not supported");
+    }
+  }
+
+  private Vehicle CreateCar(string make, string model, int doors)
+  {
+    throw new NotImplementedException();
+  }
+
+  private Vehicle CreateMotorcycle(string make, string model)
+  {
+    throw new NotImplementedException();
+  }
+
+  private Vehicle CreateSpaceship(string make, string model, int? doors)
+  {
+    throw new NotImplementedException();
+  }
+
+  private Vehicle CreateUnicycle(string make, string model)
+  {
+    throw new NotImplementedException();
+  }
+}
