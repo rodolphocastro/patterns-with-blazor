@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Models.Builders;
-
 using Serilog;
 
 using Web.Data;
@@ -27,12 +25,7 @@ namespace Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddTransient<FluentPersonBuilder>();
-            services.AddTransient<FunctionalPersonBuilder>();
-            services.AddTransient<InheritablePersonBuilder>();
-            services.AddTransient<FluentAddressBuilder>();
-            services.AddTransient<FunctionalAddressBuilder>();
-            services.AddTransient<FacetedPersonBuilder>();
+            services.AddModelsBuilders();
             services.AddSingleton<IPeopleService, PeopleService>();
         }
 
