@@ -90,21 +90,61 @@
 
   private Vehicle CreateCar(string make, string model, int doors)
   {
-    throw new NotImplementedException();
+    switch (SelectedFactoryType)
+    {
+      case Factories.MethodFactory:
+        return Vehicle.CreateNewCar(0, make, model, doors);
+      case Factories.ClassFactory:
+        throw new NotImplementedException();
+      case Factories.AbstractFactory:
+        throw new NotImplementedException();
+      default:
+        throw new InvalidOperationException("Tipo não suportado");
+    }
   }
 
   private Vehicle CreateMotorcycle(string make, string model)
   {
-    throw new NotImplementedException();
+    switch (SelectedFactoryType)
+    {
+      case Factories.MethodFactory:
+        return Vehicle.CreateNewMotorcycle(0, make, model);
+      case Factories.ClassFactory:
+        throw new NotImplementedException();
+      case Factories.AbstractFactory:
+        throw new NotImplementedException();
+      default:
+        throw new InvalidOperationException("Tipo não suportado");
+    }
   }
 
   private Vehicle CreateSpaceship(string make, string model, int? doors)
   {
-    throw new NotImplementedException();
+    switch (SelectedFactoryType)
+    {
+      case Factories.MethodFactory:
+        return Vehicle.CreateNewSpaceship(0, make, model, doors);
+      case Factories.ClassFactory:
+        throw new NotImplementedException();
+      case Factories.AbstractFactory:
+        throw new NotImplementedException();
+      default:
+        throw new InvalidOperationException("Tipo não suportado");
+    }
   }
 
   private Vehicle CreateUnicycle(string make, string model)
   {
-    throw new NotImplementedException();
+    switch (SelectedFactoryType)
+    {
+      case Factories.MethodFactory:
+        return Vehicle.CreateNewUnicycle(0, make, model);
+      case Factories.ClassFactory:
+        throw new NotImplementedException();
+      case Factories.AbstractFactory:
+        throw new NotImplementedException();
+      default:
+        throw new InvalidOperationException("Tipo não suportado");
+    }
   }
 }
