@@ -5,6 +5,7 @@
 @using Web.Components.People
 
 @inject IPeopleService PeopleService
+@inject DataStore<Person> PersonStore
 
 <section>
 
@@ -26,7 +27,7 @@
 
   <hr />
 
-  <PeopleTable People="PeopleService.People">
+  <PeopleTable People="PersonStore.Data">
 
   </PeopleTable>
 
@@ -36,10 +37,10 @@
 @code {
   public bool DisplayForm { get; set; } = false;
 
-  public int Count => PeopleService.AmountOfPeople;
+  public int Count => PersonStore.Data.Count;
 
   public void ToggleForm() => DisplayForm = !DisplayForm;
 
-  public void AddPerson(Person p) => PeopleService.AddPerson(p);
+  public void AddPerson(Person p) => PersonStore.Add(p);
 
 }
