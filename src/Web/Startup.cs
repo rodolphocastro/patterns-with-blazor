@@ -26,7 +26,6 @@ namespace Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddModelsBuilders();
-            services.AddSingleton<IPeopleService, PeopleService>();
             services.AddScoped<DataStore<Person>>();
         }
 
