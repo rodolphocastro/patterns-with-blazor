@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Models;
+
 using Serilog;
 
 using Web.Data;
@@ -26,6 +28,7 @@ namespace Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddModelsBuilders();
+            services.AddModelsFactories();
             services.AddScoped<DataStore<Person>>();
             services.AddScoped<DataStore<Vehicle>>();
         }
