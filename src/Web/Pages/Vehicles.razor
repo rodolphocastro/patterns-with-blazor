@@ -2,7 +2,6 @@
 
 @using Data
 @using Models
-@using Web.Components.Vehicles
 
 @inject DataStore<Vehicle> Store
 
@@ -42,6 +41,6 @@
 
   public void ToggleForm() => DisplayForm = !DisplayForm;
 
-  public void AddVehicle(Vehicle v) => throw new NotImplementedException();
+  public void AddVehicle(Vehicle v) => Store.Add(v);
 
 }
