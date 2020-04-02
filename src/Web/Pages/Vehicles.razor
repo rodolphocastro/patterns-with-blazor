@@ -4,6 +4,8 @@
 @using Models
 @using Web.Components.Vehicles
 
+@inject DataStore<Vehicle> Store
+
 <section>
   <h2>Vehicles</h2>
   <h3>There are @Count vehicles registered</h3>
@@ -27,13 +29,16 @@
 
   <hr />
 
-  @* TODO: Exibir Veículos *@
+  <VehiclesTable Vehicles="Store.Data">
+
+  </VehiclesTable>
+
 </section>
 
 @code {
   public bool DisplayForm { get; set; } = false;
 
-  public int Count => 0;
+  public int Count => Store.Data.Count;
 
   public void ToggleForm() => DisplayForm = !DisplayForm;
 

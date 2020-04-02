@@ -27,6 +27,7 @@ namespace Web
             services.AddServerSideBlazor();
             services.AddModelsBuilders();
             services.AddScoped<DataStore<Person>>();
+            services.AddScoped<DataStore<Vehicle>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
