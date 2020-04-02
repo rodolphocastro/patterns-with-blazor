@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class Vehicle
+    public class Vehicle : IDriveable, IManufacturable
     {
         internal Vehicle() { }
 
@@ -13,6 +13,11 @@
         public string Make { get; set; }
 
         public string Model { get; set; }
+
+        public void Drive()
+        {
+            // Do something
+        }
 
         public static Vehicle CreateNewMotorcycle(int id, string make, string model) => new Vehicle { Id = id, Wheels = 2, Make = make, Model = model };
         public static Vehicle CreateNewUnicycle(int id, string make, string model) => new Vehicle { Id = id, Wheels = 1, Make = make, Model = model };
