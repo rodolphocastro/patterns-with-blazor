@@ -6,41 +6,41 @@
 @inject DataStore<Vehicle> Store
 
 <section>
-  <h2>Vehicles</h2>
-  <h3>There are @Count vehicles registered</h3>
+    <h2>Vehicles</h2>
+    <h3>There are @Count vehicles registered</h3>
 
-  <p>
-    Vehicles are built using the Factory strategy.
-  </p>
-  <p>
-    <small>Pick a strategy within the form</small>
-  </p>
+    <p>
+        Vehicles are built using the Factory strategy.
+    </p>
+    <p>
+        <small>Pick a strategy within the form</small>
+    </p>
 
-  <button class="button" @onclick="ToggleForm">Create a Vehicle</button>
+    <button class="button" @onclick="ToggleForm">Create a Vehicle</button>
 
-  @if (DisplayForm)
-  {
-    <h3>New Vehicle</h3>
-    <VehicleFactoryForm OnVehicleSubmitted="AddVehicle">
+    @if (DisplayForm)
+    {
+        <h3>New Vehicle</h3>
+        <VehicleFactoryForm OnVehicleSubmitted="AddVehicle">
 
-    </VehicleFactoryForm>
-  }
+        </VehicleFactoryForm>
+    }
 
-  <hr />
+    <hr />
 
-  <VehiclesTable Vehicles="Store.Data">
+    <VehiclesTable Vehicles="Store.Data">
 
-  </VehiclesTable>
+    </VehiclesTable>
 
 </section>
 
 @code {
-  public bool DisplayForm { get; set; } = false;
+    public bool DisplayForm { get; set; } = false;
 
-  public int Count => Store.Data.Count;
+    public int Count => Store.Data.Count;
 
-  public void ToggleForm() => DisplayForm = !DisplayForm;
+    public void ToggleForm() => DisplayForm = !DisplayForm;
 
-  public void AddVehicle(Vehicle v) => Store.Add(v);
+    public void AddVehicle(Vehicle v) => Store.Add(v);
 
 }
