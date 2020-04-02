@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Models;
 using Serilog;
 
 using Web.Data;
@@ -26,7 +26,7 @@ namespace Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddModelsBuilders();
-            services.AddSingleton<IPeopleService, PeopleService>();
+            services.AddScoped<DataStore<Person>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
