@@ -2,6 +2,7 @@
 @using Models.Factories
 
 @inject VehicleFactory _factory
+@inject AbstractVehicleFactory _abstractFactory
 
 <form @onsubmit="SubmitVehicle">
     <fieldset>
@@ -99,7 +100,7 @@
             case Factories.ClassFactory:
                 return _factory.CreateNewCar(0, make, model, doors);
             case Factories.AbstractFactory:
-                throw new NotImplementedException();
+                return (Vehicle)_abstractFactory.CreateNewCar(0, make, model, doors);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
@@ -114,7 +115,7 @@
             case Factories.ClassFactory:
                 return _factory.CreateNewMotorcycle(0, make, model);
             case Factories.AbstractFactory:
-                throw new NotImplementedException();
+                return (Vehicle)_abstractFactory.CreateNewMotorcycle(0, make, model);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
@@ -129,7 +130,7 @@
             case Factories.ClassFactory:
                 return _factory.CreateNewSpaceship(0, make, model, doors);
             case Factories.AbstractFactory:
-                throw new NotImplementedException();
+                return (Vehicle)_abstractFactory.CreateNewSpaceship(0, make, model, doors);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
@@ -144,7 +145,7 @@
             case Factories.ClassFactory:
                 return _factory.CreateNewUnicycle(0, make, model);
             case Factories.AbstractFactory:
-                throw new NotImplementedException();
+                return (Vehicle)_abstractFactory.CreateNewUnicycle(0, make, model);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
