@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class Vehicle : IDriveable, IManufacturable
+    public class Vehicle : IVehicle
     {
         internal Vehicle() { }
 
