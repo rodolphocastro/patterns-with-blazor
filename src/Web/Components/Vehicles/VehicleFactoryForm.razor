@@ -71,21 +71,22 @@
 
     public void SubmitVehicle()
     {
-        OnVehicleSubmitted.InvokeAsync(CreateByType(SelectedVehicleMake, Model, Doors));
+        var factoryPlan = CreateByType(SelectedVehicleMake, Model, Doors);
+        OnVehicleSubmitted.InvokeAsync((Vehicle)factoryPlan());
     }
 
-    private Vehicle CreateByType(string make, string model, int? doors)
+    private Func<IVehicle> CreateByType(string make, string model, int? doors)
     {
         switch (SelectedVehicleType)
         {
             case VehicleTypes.Car:
-                return CreateCar(make, model, (int)doors);
+                return () => CreateCar(make, model, (int)doors);
             case VehicleTypes.Motorcycle:
-                return CreateMotorcycle(make, model);
+                return () => CreateMotorcycle(make, model);
             case VehicleTypes.Spaceship:
-                return CreateSpaceship(make, model, doors);
+                return () => CreateSpaceship(make, model, doors);
             case VehicleTypes.Unicycle:
-                return CreateUnicycle(make, model);
+                return () => CreateUnicycle(make, model);
             default:
                 throw new InvalidOperationException("Selected type is not supported");
         }
