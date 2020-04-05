@@ -80,73 +80,73 @@
         switch (SelectedVehicleType)
         {
             case VehicleTypes.Car:
-                return () => CreateCar(make, model, (int)doors);
+                return CreateCar(make, model, (int)doors);
             case VehicleTypes.Motorcycle:
-                return () => CreateMotorcycle(make, model);
+                return CreateMotorcycle(make, model);
             case VehicleTypes.Spaceship:
-                return () => CreateSpaceship(make, model, doors);
+                return CreateSpaceship(make, model, doors);
             case VehicleTypes.Unicycle:
-                return () => CreateUnicycle(make, model);
+                return CreateUnicycle(make, model);
             default:
                 throw new InvalidOperationException("Selected type is not supported");
         }
     }
 
-    private Vehicle CreateCar(string make, string model, int doors)
+    private Func<IVehicle> CreateCar(string make, string model, int doors)
     {
         switch (SelectedFactoryType)
         {
             case Factories.MethodFactory:
-                return Vehicle.CreateNewCar(0, make, model, doors);
+                return () => Vehicle.CreateNewCar(0, make, model, doors);
             case Factories.ClassFactory:
-                return _factory.CreateNewCar(0, make, model, doors);
+                return () => _factory.CreateNewCar(0, make, model, doors);
             case Factories.AbstractFactory:
-                return (Vehicle)_abstractFactory.CreateNewCar(0, make, model, doors);
+                return () => _abstractFactory.CreateNewCar(0, make, model, doors);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
     }
 
-    private Vehicle CreateMotorcycle(string make, string model)
+    private Func<IVehicle> CreateMotorcycle(string make, string model)
     {
         switch (SelectedFactoryType)
         {
             case Factories.MethodFactory:
-                return Vehicle.CreateNewMotorcycle(0, make, model);
+                return () => Vehicle.CreateNewMotorcycle(0, make, model);
             case Factories.ClassFactory:
-                return _factory.CreateNewMotorcycle(0, make, model);
+                return () => _factory.CreateNewMotorcycle(0, make, model);
             case Factories.AbstractFactory:
-                return (Vehicle)_abstractFactory.CreateNewMotorcycle(0, make, model);
+                return () => _abstractFactory.CreateNewMotorcycle(0, make, model);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
     }
 
-    private Vehicle CreateSpaceship(string make, string model, int? doors)
+    private Func<IVehicle> CreateSpaceship(string make, string model, int? doors)
     {
         switch (SelectedFactoryType)
         {
             case Factories.MethodFactory:
-                return Vehicle.CreateNewSpaceship(0, make, model, doors);
+                return () => Vehicle.CreateNewSpaceship(0, make, model, doors);
             case Factories.ClassFactory:
-                return _factory.CreateNewSpaceship(0, make, model, doors);
+                return () => _factory.CreateNewSpaceship(0, make, model, doors);
             case Factories.AbstractFactory:
-                return (Vehicle)_abstractFactory.CreateNewSpaceship(0, make, model, doors);
+                return () => _abstractFactory.CreateNewSpaceship(0, make, model, doors);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
     }
 
-    private Vehicle CreateUnicycle(string make, string model)
+    private Func<IVehicle> CreateUnicycle(string make, string model)
     {
         switch (SelectedFactoryType)
         {
             case Factories.MethodFactory:
-                return Vehicle.CreateNewUnicycle(0, make, model);
+                return () => Vehicle.CreateNewUnicycle(0, make, model);
             case Factories.ClassFactory:
-                return _factory.CreateNewUnicycle(0, make, model);
+                return () => _factory.CreateNewUnicycle(0, make, model);
             case Factories.AbstractFactory:
-                return (Vehicle)_abstractFactory.CreateNewUnicycle(0, make, model);
+                return () => _abstractFactory.CreateNewUnicycle(0, make, model);
             default:
                 throw new InvalidOperationException("Tipo não suportado");
         }
