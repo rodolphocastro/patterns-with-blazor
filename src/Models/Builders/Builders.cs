@@ -5,7 +5,7 @@ namespace Models.Builders
     /// <summary>
     /// Shortcut para acessar os builders.
     /// </summary>
-    public partial class Builders
+    public static class Builders
     {
         public const string FluentType = "Fluent";
         public const string FunctionalType = "Functional";

@@ -1,0 +1,28 @@
+﻿@using Models
+
+<table class="table-responsive">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Number of Wheels</th>
+            <th>Number of Doors</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Vehicles)
+        {
+            <tr>
+                <td>@vehicle.Make</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.Wheels</td>
+                <td>@vehicle.Doors</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public IEnumerable<Vehicle> Vehicles { get; set; }
+}

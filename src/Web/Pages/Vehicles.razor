@@ -1,0 +1,46 @@
+﻿@page "/vehicles"
+
+@using Data
+@using Models
+
+@inject DataStore<Vehicle> Store
+
+<section>
+    <h2>Vehicles</h2>
+    <h3>There are @Count vehicles registered</h3>
+
+    <p>
+        Vehicles are built using the Factory strategy.
+    </p>
+    <p>
+        <small>Pick a strategy within the form</small>
+    </p>
+
+    <button class="button" @onclick="ToggleForm">Create a Vehicle</button>
+
+    @if (DisplayForm)
+    {
+        <h3>New Vehicle</h3>
+        <VehicleFactoryForm OnVehicleSubmitted="AddVehicle">
+
+        </VehicleFactoryForm>
+    }
+
+    <hr />
+
+    <VehiclesTable Vehicles="Store.Data">
+
+    </VehiclesTable>
+
+</section>
+
+@code {
+    public bool DisplayForm { get; set; } = false;
+
+    public int Count => Store.Data.Count;
+
+    public void ToggleForm() => DisplayForm = !DisplayForm;
+
+    public void AddVehicle(Vehicle v) => Store.Add(v);
+
+}
