@@ -13,7 +13,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
             }
 
-            _ = services.AddSingleton<VehicleFactory>();
+            _ = services
+                .AddSingleton<VehicleFactory>()
+                .AddSingleton<AbstractVehicleFactory>();
+
             return services;
         }
     }
