@@ -16,12 +16,14 @@
             <small>Pick a strategy within the form</small>
         </p>
 
-        <button class="button" @onclick="ToggleForm">Create a Vehicle</button>
+        <button class="button" @onclick="ToggleForm">Create a Journal</button>
 
         @if (DisplayForm)
         {
             <h4>New Journal</h4>
-            //TODO: Adicionar form para criação
+            <JournalForm OnJournalSubmitted="AddJournal" Base="Store.Data.First()">
+
+            </JournalForm>
         }
 
         <hr />

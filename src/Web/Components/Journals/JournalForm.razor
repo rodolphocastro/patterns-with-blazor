@@ -1,0 +1,84 @@
+﻿@using Models
+@using Models.Prototypes
+
+<form @onsubmit="SubmitJournal">
+    <fieldset>
+        <h5>Strategy</h5>
+        <p class="field">
+            <label class="select" for="prototype-type">
+                <select id="prototype-type" @bind="SelectedStrategy">
+                    @foreach (var strategy in Strategies)
+                    {
+                        <option>@strategy</option>
+                    }
+                </select>
+            </label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <h5>Journal</h5>
+        <p class="field">
+            <label for="journal-title">Title</label>
+            <input id="journal-title" type="text" @bind-value="Title" />
+        </p>
+        <p class="field">
+            <input id="journal-status" type="checkbox" @bind-value="Active"/>
+            <label for="journal-status">Active?</label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <p class="field">
+            <div class="button-group button-group-block">
+                <button type="submit" class="button">Submit</button>
+                <button type="reset" class="button">Reset</button>
+            </div>
+        </p>
+    </fieldset>
+</form>
+
+@code {
+
+    [Parameter]
+    public EventCallback<Journal> OnJournalSubmitted { get; set; }
+
+    [Parameter]
+    public Journal Base { get; set; }
+
+    public IEnumerable<string> Strategies => Prototypes.PrototypeTypes;
+    public string SelectedStrategy { get; set; } = Prototypes.PrototypeTypes.First();
+
+    public string Title { get; set; }
+    public bool Active { get; set; }
+
+
+    public void SubmitJournal()
+    {
+        var method = ApplyUpdatesToBase(SelectedStrategy, Base, Title, Active);
+        OnJournalSubmitted.InvokeAsync(method());
+    }
+
+    private Func<Journal> ApplyUpdatesToBase(string strategy, Journal baseJournal, string title, bool active)
+    {
+        switch (strategy)
+        {
+            case Prototypes.None:
+                return () =>
+                {
+                    var subject = baseJournal;
+                    subject.Title = title;
+                    subject.Active = active;
+                    return subject;
+                };
+            default:
+                throw new InvalidOperationException("Selected strategy is not supported");
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Title = Base.Title;
+        Active = Base.Active;
+    }
+}
