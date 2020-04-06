@@ -5,5 +5,7 @@
         public string Name { get; set; }
 
         public string Biography { get; set; }
+
+        public override string ToString() => Name;
     }
 }

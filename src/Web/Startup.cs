@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,20 @@ namespace Web
             services.AddModelsFactories();
             services.AddScoped<DataStore<Person>>();
             services.AddScoped<DataStore<Vehicle>>();
+            services.AddScoped(cfg =>
+            {
+                var instance = new DataStore<Journal>();
+                instance.Add(new Journal
+                {
+                    Id = "my-root-id",
+                    Title = "My base journal",
+                    Active = true,
+                    Logs = Enumerable.Empty<string>(),
+                    Author = new Author { Name = "John Doe", Biography = "Lorem ipsum dolor sit amet" }
+                });
+
+                return instance;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

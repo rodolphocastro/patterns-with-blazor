@@ -1,0 +1,42 @@
+﻿@page "/journals"
+
+@using Data
+@using Models
+
+@inject DataStore<Journal> Store
+
+    <section>
+        <h2>Journals</h2>
+        <h3>There are @Count journals registered</h3>
+
+        <p>
+            Journals are build using the Prototype strategy.
+        </p>
+        <p>
+            <small>Pick a strategy within the form</small>
+        </p>
+
+        <button class="button" @onclick="ToggleForm">Create a Vehicle</button>
+
+        @if (DisplayForm)
+        {
+            <h4>New Journal</h4>
+            //TODO: Adicionar form para criação
+        }
+
+        <hr />
+
+        <JournalsTable Journals="Store.Data">
+
+        </JournalsTable>
+    </section>
+
+@code {
+    public bool DisplayForm { get; set; } = false;
+
+    public int Count => Store.Data.Count;
+
+    public void ToggleForm() => DisplayForm = !DisplayForm;
+
+    public void AddJournal(Journal j) => Store.Add(j);
+}
