@@ -62,38 +62,55 @@
 
     private Func<Journal> ApplyUpdatesToBase(string strategy, string title, bool active)
     {
+        Func<Journal> selectedStrategy;
+        Func<Journal, Journal> applyUpdatesToJournal = (j) =>
+        {
+            j.Title = title;
+            j.Active = active;
+            return j;
+        };
+
         switch (strategy)
         {
             case Prototypes.None:
-                return () =>
+                selectedStrategy = () =>
                 {
                     _logger?.LogDebug("Applying updates to Base {@Journal}", Base);
-                    var subject = Base;
-                    subject.Title = title;
-                    subject.Active = active;
-                    return subject;
+                    return Base;                    
                 };
+                break;
             case Prototypes.Instances:
-                return () =>
+                selectedStrategy = () =>
                 {
                     var subject = Journal.Default;
-                    _logger?.LogDebug("Applying updates to Default {@Journal}", Journal.Default);
-                    subject.Title = title;
-                    subject.Active = active;
+                    _logger?.LogDebug("Applying updates to Default {@Journal}", Journal.Default);                    
                     return subject;
                 };
+                break;
             case Prototypes.CopyCtor:
-                return () =>
+                selectedStrategy = () =>
                 {
                     var subject = new Journal(Base);
-                    _logger?.LogDebug("Applying updates to a CopyCtor {@Journal}", subject);
-                    subject.Title = title;
-                    subject.Active = active;
+                    _logger?.LogDebug("Applying updates to a CopyCtor {@Journal}", subject);                    
                     return subject;
                 };
+                break;
+            case Prototypes.Cloneable:
+                selectedStrategy = () =>
+                {
+                    var subject = (Journal)Base.Clone();
+                    _logger?.LogDebug("Applying updates to a Clone {@Journal}", subject);                    
+                    return subject;
+                };
+                break;
             default:
                 throw new InvalidOperationException("Selected strategy is not supported");
         }
+        return () =>
+        {
+            var subject = selectedStrategy();            
+            return applyUpdatesToJournal(subject);
+        };
     }
 
     protected override void OnInitialized()

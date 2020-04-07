@@ -2,7 +2,7 @@
 
 namespace Models
 {
-    public class Author
+    public class Author : ICloneable
     {
         public Author()
         {
@@ -27,5 +27,6 @@ namespace Models
         public override string ToString() => Name;
 
         public static Author Default { get; } = new Author { Name = "John Doe", Biography = "Lorem Ipsum Dolor sit amet" };
+        public object Clone() => new Author(this);
     }
 }

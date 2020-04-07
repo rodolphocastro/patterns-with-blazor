@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Models
 {
-    public class Journal
+    public class Journal : ICloneable
     {
         public Journal()
         {
@@ -35,5 +35,7 @@ namespace Models
         public Author Author { get; set; }
 
         public static Journal Default { get; } = new Journal { Id = string.Empty, Active = true, Author = Author.Default, Logs = Enumerable.Empty<string>(), Title = "Default Journal" };
+
+        public object Clone() => new Journal(this);
     }
 }
