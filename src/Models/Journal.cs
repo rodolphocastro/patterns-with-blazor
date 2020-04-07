@@ -1,10 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Models
 {
     public class Journal
     {
+        public Journal()
+        {
+
+        }
+
+        public Journal(Journal j)
+        {
+            if (j is null)
+            {
+                throw new ArgumentNullException(nameof(j));
+            }
+
+            Id = j.Id;
+            Title = j.Title;
+            Logs = j.Logs;
+            Active = j.Active;
+            Author = new Author(j.Author);
+        }
         public string Id { get; set; }
 
         public string Title { get; set; }

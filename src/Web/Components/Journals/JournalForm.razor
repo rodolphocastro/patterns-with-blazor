@@ -67,7 +67,7 @@
             case Prototypes.None:
                 return () =>
                 {
-                    _logger?.LogDebug("Applying updates do Base {@Journal}", Base);
+                    _logger?.LogDebug("Applying updates to Base {@Journal}", Base);
                     var subject = Base;
                     subject.Title = title;
                     subject.Active = active;
@@ -77,7 +77,16 @@
                 return () =>
                 {
                     var subject = Journal.Default;
-                    _logger?.LogDebug("Applying updates do Default {@Journal}", Journal.Default);
+                    _logger?.LogDebug("Applying updates to Default {@Journal}", Journal.Default);
+                    subject.Title = title;
+                    subject.Active = active;
+                    return subject;
+                };
+            case Prototypes.CopyCtor:
+                return () =>
+                {
+                    var subject = new Journal(Base);
+                    _logger?.LogDebug("Applying updates to a CopyCtor {@Journal}", subject);
                     subject.Title = title;
                     subject.Active = active;
                     return subject;

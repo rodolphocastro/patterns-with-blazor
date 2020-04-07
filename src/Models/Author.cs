@@ -1,7 +1,25 @@
-﻿namespace Models
+﻿using System;
+
+namespace Models
 {
     public class Author
     {
+        public Author()
+        {
+
+        }
+
+        public Author(Author a)
+        {
+            if (a is null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
+            Name = a.Name;
+            Biography = a.Biography;
+        }
+
         public string Name { get; set; }
 
         public string Biography { get; set; }
