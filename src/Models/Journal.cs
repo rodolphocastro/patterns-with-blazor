@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Models
 {
@@ -13,5 +14,7 @@ namespace Models
         public bool Active { get; set; }
 
         public Author Author { get; set; }
+
+        public static Journal Default { get; } = new Journal { Id = string.Empty, Active = true, Author = Author.Default, Logs = Enumerable.Empty<string>(), Title = "Default Journal" };
     }
 }

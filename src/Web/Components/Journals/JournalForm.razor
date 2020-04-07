@@ -69,6 +69,14 @@
                     subject.Active = active;
                     return subject;
                 };
+            case Prototypes.Instances:
+                return () =>
+                {
+                    var subject = Journal.Default;
+                    subject.Title = title;
+                    subject.Active = active;
+                    return subject;
+                };
             default:
                 throw new InvalidOperationException("Selected strategy is not supported");
         }
