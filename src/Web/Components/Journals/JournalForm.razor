@@ -1,5 +1,8 @@
 ﻿@using Models
 @using Models.Prototypes
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<JournalForm> _logger;
 
 <form @onsubmit="SubmitJournal">
     <fieldset>
@@ -22,7 +25,7 @@
             <input id="journal-title" type="text" @bind-value="Title" />
         </p>
         <p class="field">
-            <input id="journal-status" type="checkbox" @bind-value="Active"/>
+            <input id="journal-status" type="checkbox" @bind-value="Active" />
             <label for="journal-status">Active?</label>
         </p>
     </fieldset>
@@ -53,18 +56,19 @@
 
     public void SubmitJournal()
     {
-        var method = ApplyUpdatesToBase(SelectedStrategy, Base, Title, Active);
+        var method = ApplyUpdatesToBase(SelectedStrategy, Title, Active);
         OnJournalSubmitted.InvokeAsync(method());
     }
 
-    private Func<Journal> ApplyUpdatesToBase(string strategy, Journal baseJournal, string title, bool active)
+    private Func<Journal> ApplyUpdatesToBase(string strategy, string title, bool active)
     {
         switch (strategy)
         {
             case Prototypes.None:
                 return () =>
                 {
-                    var subject = baseJournal;
+                    _logger?.LogDebug("Applying updates do Base {@Journal}", Base);
+                    var subject = Base;
                     subject.Title = title;
                     subject.Active = active;
                     return subject;
@@ -73,6 +77,7 @@
                 return () =>
                 {
                     var subject = Journal.Default;
+                    _logger?.LogDebug("Applying updates do Default {@Journal}", Journal.Default);
                     subject.Title = title;
                     subject.Active = active;
                     return subject;
